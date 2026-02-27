@@ -82,7 +82,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                     </li>
                                 ))}
                             </ul>
-                            <h2>{msg("identity-provider-login-label")}</h2>
+                            <h2>{msg("cdiLoginWithDefault")}</h2>
                             <hr />
                         </div>
                     )}
