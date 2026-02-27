@@ -12,35 +12,14 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const realm = {
-    name: "cdi",
-    displayName: "CDI SSO",
-    displayNameHtml: "CDI SSO",
-    internationalizationEnabled: true,
-    registrationAllowed: false,
-    resetPasswordAllowed: false,
-}
-const social = {
-    displayInfo: true,
-    providers: [
-        {
-            loginUrl: "oidc",
-            alias: "oidc",
-            providerId: "oidc",
-            displayName: "DFN-AAI",
-            iconClasses: "fa fa-cube"
-        }
-    ]
-};
+import { realm, social, localeEN, localeDE, messagesPerField } from './_shared';
 
 export const BlankLoginEnglish: Story = {
     render: () => <KcPageStory kcContext={
         {
             realm,
             social,
-            locale: {
-                currentLanguageTag: "en",
-            }
+            locale: localeEN,
         }
     } />
 };
@@ -50,9 +29,7 @@ export const BlankLoginGerman: Story = {
         {
             realm,
             social,
-            locale: {
-                currentLanguageTag: "de",
-            }
+            locale: localeDE,
         }
     } />
 };
@@ -63,27 +40,12 @@ export const WithWrongPasswordEnglish: Story = {
             kcContext={{
                 realm,
                 social,
-                locale: {
-                    currentLanguageTag: "en",
-                },
+                locale: localeEN,
 
                 login: {
                     username: "johndoe"
                 },
-                messagesPerField: {
-                    // NOTE: The other functions of messagesPerField are derived from get() and
-                    // existsError() so they are the only ones that need to mock.
-                    existsError: (fieldName: string, ...otherFieldNames: string[]) => {
-                        const fieldNames = [fieldName, ...otherFieldNames];
-                        return fieldNames.includes("username") || fieldNames.includes("password");
-                    },
-                    get: (fieldName: string) => {
-                        if (fieldName === "username" || fieldName === "password") {
-                            return "Invalid username or password.";
-                        }
-                        return "";
-                    }
-                }
+                messagesPerField: messagesPerField(["username", "password"], "Invalid username or password."),
             }}
         />
     )
@@ -95,26 +57,11 @@ export const WithWrongPasswordGerman: Story = {
             kcContext={{
                 realm,
                 social,
-                locale: {
-                    currentLanguageTag: "de",
-                },
+                locale: localeDE,
                 login: {
                     username: "johndoe"
                 },
-                messagesPerField: {
-                    // NOTE: The other functions of messagesPerField are derived from get() and
-                    // existsError() so they are the only ones that need to mock.
-                    existsError: (fieldName: string, ...otherFieldNames: string[]) => {
-                        const fieldNames = [fieldName, ...otherFieldNames];
-                        return fieldNames.includes("username") || fieldNames.includes("password");
-                    },
-                    get: (fieldName: string) => {
-                        if (fieldName === "username" || fieldName === "password") {
-                            return "Falscher Nutzername oder Passwort";
-                        }
-                        return "";
-                    }
-                }
+                messagesPerField: messagesPerField(["username", "password"], "Falscher Nutzername oder Passwort."),
             }}
         />
     )
@@ -127,9 +74,7 @@ export const WithErrorMessageEnglish: Story = {
             kcContext={{
                 realm,
                 social,
-                locale: {
-                    currentLanguageTag: "en",
-                },
+                locale: localeEN,
                 message: {
                     summary: "Some random error message here - probably login with SSO failed",
                     type: "error"
@@ -146,9 +91,7 @@ export const WithErrorMessageGerman: Story = {
             kcContext={{
                 realm,
                 social,
-                locale: {
-                    currentLanguageTag: "de",
-                },
+                locale: localeDE,
                 message: {
                     summary: "Irgendeine Fehlermeldung hier - wahrscheinlich ging SSO login schief",
                     type: "error"
