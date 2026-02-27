@@ -152,6 +152,15 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             </div>
                         )}
                         {socialProvidersNode}
+                        {displayInfo && (
+                            <div id="kc-info" className={kcClsx("kcSignUpClass")}>
+                                <div id="kc-info-wrapper" className={kcClsx("kcInfoAreaWrapperClass")}>
+                                    {infoNode}
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+                        )}
                         {children}
                         {auth !== undefined && auth.showTryAnotherWayLink && (
                             <form id="kc-select-try-another-way-form" action={url.loginAction} method="post">
@@ -170,13 +179,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     </a>
                                 </div>
                             </form>
-                        )}
-                        {displayInfo && (
-                            <div id="kc-info" className={kcClsx("kcSignUpClass")}>
-                                <div id="kc-info-wrapper" className={kcClsx("kcInfoAreaWrapperClass")}>
-                                    {infoNode}
-                                </div>
-                            </div>
                         )}
                     </div>
                 </div>

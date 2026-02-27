@@ -74,8 +74,9 @@ npx keycloakify initialize-email-theme
 ```
 
 ## Nice to Haves:
-- Logo
-- Favicon
+
+-   Logo
+-   Favicon
 
 ## LICENSE
 

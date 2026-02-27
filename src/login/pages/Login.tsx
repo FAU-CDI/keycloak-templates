@@ -21,8 +21,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         classes
     });
 
-    const { social, realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField, enableWebAuthnConditionalUI, authenticators } =
-        kcContext;
+    const { social, realm, url, usernameHidden, login, auth, messagesPerField, enableWebAuthnConditionalUI, authenticators } = kcContext;
 
     const { msg, msgStr } = i18n;
 
@@ -44,19 +43,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             classes={classes}
             displayMessage={!messagesPerField.existsError("username", "password")}
             headerNode={msg("loginAccountTitle")}
-            displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
-            infoNode={
-                <div id="kc-registration-container">
-                    <div id="kc-registration">
-                        <span>
-                            {msg("noAccount")}{" "}
-                            <a tabIndex={8} href={url.registrationUrl}>
-                                {msg("doRegister")}
-                            </a>
-                        </span>
-                    </div>
-                </div>
-            }
+            displayInfo
+            infoNode={<p>{msg("cdiWelcomeText")}</p>}
             socialProvidersNode={
                 <>
                     {realm.password && social?.providers !== undefined && social.providers.length !== 0 && (
@@ -74,16 +62,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             href={p.loginUrl}
                                         >
                                             {p.iconClasses && <i className={clsx(kcClsx("kcCommonLogoIdP"), p.iconClasses)} aria-hidden="true"></i>}
-                                            <span
-                                                className={clsx(kcClsx("kcFormSocialAccountNameClass"), p.iconClasses && "kc-social-icon-text")}
-                                                dangerouslySetInnerHTML={{ __html: kcSanitize(p.displayName) }}
-                                            ></span>
+                                            <span className={clsx(kcClsx("kcFormSocialAccountNameClass"), p.iconClasses && "kc-social-icon-text")}>
+                                                {msg("cdiSelectInstitutionWith", kcSanitize(p.displayName))}
+                                            </span>
                                         </a>
                                     </li>
                                 ))}
                             </ul>
-                            <h2>{msg("cdiLoginWithDefault")}</h2>
-                            <hr />
                         </div>
                     )}
                 </>
