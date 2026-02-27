@@ -45,6 +45,14 @@ npm run build-keycloak-theme
 
 # How to customize the theme
 
+```bash
+# to add a new story to develop
+npx keycloakify add-story
+
+# to fully customize a template
+npx keycloakify eject-page
+```
+
 # Building the theme
 
 You need to have [Maven](https://maven.apache.org/) installed to build the theme (Maven >= 3.1.1, Java >= 7).  
@@ -64,6 +72,10 @@ You can customize this behavior, see documentation [here](https://docs.keycloaki
 npx keycloakify initialize-account-theme
 npx keycloakify initialize-email-theme
 ```
+
+## Nice to Haves:
+- Logo
+- Favicon
 
 ## LICENSE
 
