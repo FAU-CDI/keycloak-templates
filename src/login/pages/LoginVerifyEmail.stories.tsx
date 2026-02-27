@@ -12,7 +12,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-import { localeEN, localeDE, realm } from "./_shared"
+import { localeEN, localeDE, realm } from "./_shared";
 
 export const DefaultEnglish: Story = {
     render: () => (

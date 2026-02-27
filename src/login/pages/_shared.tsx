@@ -1,12 +1,11 @@
-
 export const realm = {
     name: "cdi",
     displayName: "CDI SSO",
     displayNameHtml: "CDI SSO",
     internationalizationEnabled: true,
     registrationAllowed: false,
-    resetPasswordAllowed: false,
-}
+    resetPasswordAllowed: false
+};
 export const social = {
     displayInfo: true,
     providers: [
@@ -20,11 +19,11 @@ export const social = {
     ]
 };
 export const localeDE = {
-    currentLanguageTag: "de",
-}
+    currentLanguageTag: "de"
+};
 export const localeEN = {
-    currentLanguageTag: "en",
-}
+    currentLanguageTag: "en"
+};
 
 export function messagesPerField(names: string[], message: string) {
     return {
@@ -43,5 +42,5 @@ export function messagesPerField(names: string[], message: string) {
             }
             return "";
         }
-    }
+    };
 }

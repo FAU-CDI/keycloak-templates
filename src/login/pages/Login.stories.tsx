@@ -12,26 +12,30 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-import { realm, social, localeEN, localeDE, messagesPerField } from './_shared';
+import { realm, social, localeEN, localeDE, messagesPerField } from "./_shared";
 
 export const BlankLoginEnglish: Story = {
-    render: () => <KcPageStory kcContext={
-        {
-            realm,
-            social,
-            locale: localeEN,
-        }
-    } />
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                realm,
+                social,
+                locale: localeEN
+            }}
+        />
+    )
 };
 
 export const BlankLoginGerman: Story = {
-    render: () => <KcPageStory kcContext={
-        {
-            realm,
-            social,
-            locale: localeDE,
-        }
-    } />
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                realm,
+                social,
+                locale: localeDE
+            }}
+        />
+    )
 };
 
 export const WithWrongPasswordEnglish: Story = {
@@ -45,7 +49,7 @@ export const WithWrongPasswordEnglish: Story = {
                 login: {
                     username: "johndoe"
                 },
-                messagesPerField: messagesPerField(["username", "password"], "Invalid username or password."),
+                messagesPerField: messagesPerField(["username", "password"], "Invalid username or password.")
             }}
         />
     )
@@ -61,12 +65,11 @@ export const WithWrongPasswordGerman: Story = {
                 login: {
                     username: "johndoe"
                 },
-                messagesPerField: messagesPerField(["username", "password"], "Falscher Nutzername oder Passwort."),
+                messagesPerField: messagesPerField(["username", "password"], "Falscher Nutzername oder Passwort.")
             }}
         />
     )
 };
-
 
 export const WithErrorMessageEnglish: Story = {
     render: () => (
@@ -78,8 +81,7 @@ export const WithErrorMessageEnglish: Story = {
                 message: {
                     summary: "Some random error message here - probably login with SSO failed",
                     type: "error"
-                },
-                
+                }
             }}
         />
     )
@@ -95,8 +97,7 @@ export const WithErrorMessageGerman: Story = {
                 message: {
                     summary: "Irgendeine Fehlermeldung hier - wahrscheinlich ging SSO login schief",
                     type: "error"
-                },
-                
+                }
             }}
         />
     )

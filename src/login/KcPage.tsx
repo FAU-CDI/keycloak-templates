@@ -14,7 +14,6 @@ const doMakeUserConfirmPassword = true;
 
 const Login = lazy(() => import("./pages/Login"));
 
-
 export default function KcPage(props: { kcContext: KcContext }) {
     const { kcContext } = props;
 
@@ -24,14 +23,15 @@ export default function KcPage(props: { kcContext: KcContext }) {
         <Suspense>
             {(() => {
                 switch (kcContext.pageId) {
-                case "login.ftl": return (
-                        <Login
-                            {...{ kcContext, i18n, classes }}
-                            Template={Template}
-                            doUseDefaultCss={true}
-                        />
-                    );
-                default:
+                    case "login.ftl":
+                        return (
+                            <Login
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={true}
+                            />
+                        );
+                    default:
                         return (
                             <DefaultPage
                                 kcContext={kcContext}

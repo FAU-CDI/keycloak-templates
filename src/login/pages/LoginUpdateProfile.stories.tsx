@@ -12,27 +12,29 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-import { realm, localeDE, localeEN, messagesPerField} from './_shared'
+import { realm, localeDE, localeEN, messagesPerField } from "./_shared";
 
 export const DefaultEnglish: Story = {
-    render: () => <KcPageStory kcContext={
-        {
-            realm,
-            locale: localeEN,
-        }
-    } />
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                realm,
+                locale: localeEN
+            }}
+        />
+    )
 };
 
 export const DefaultGerman: Story = {
-    render: () => <KcPageStory kcContext={
-        {
-            realm,
-            locale: localeDE,
-        }
-    } />
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                realm,
+                locale: localeDE
+            }}
+        />
+    )
 };
-
-
 
 export const WithProfileErrorEnglish: Story = {
     render: () => (
@@ -49,8 +51,6 @@ export const WithProfileErrorEnglish: Story = {
         />
     )
 };
-
-
 
 export const WithProfileErrorGerman: Story = {
     render: () => (

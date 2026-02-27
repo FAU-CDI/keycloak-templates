@@ -1,58 +1,97 @@
-<p align="center">
-    <i>🚀 <a href="https://keycloakify.dev">Keycloakify</a> v11 starter 🚀</i>
-    <br/>
-    <br/>
-</p>
+# Keycloak Templates for CDI / HITS SSO Login
 
-# Quick start
+This repository contains the Keycloak Templates for CDI / HITS SSO Login page.
+
+They are based on [Keycloakify](https://www.keycloakify.dev).
+For more information, see their [official docs](https://docs.keycloakify.dev/).
+
+## Development Setup
 
 ```bash
-git clone https://github.com/keycloakify/keycloakify-starter
-cd keycloakify-starter
-yarn install # Or use an other package manager, just be sure to delete the yarn.lock if you use another package manager.
+# install dependencies
+yarn install
+
+# to also install maven, depending on your OS:
+sudo apt-get install maven
+
+brew install maven
+
+choco install openjdk
+choco install maven
 ```
 
-# Testing the theme locally
+### Testing the theme locally
 
-[Documentation](https://docs.keycloakify.dev/testing-your-theme)
+[See also official docs](https://docs.keycloakify.dev/testing-your-theme)
+
+```bash
+# Using the Storybook UI (with live reload for development)
+npm run storybook
+
+# Inside an actual keycloak.
+# This needs docker and maven.
+npx keycloakify start-keycloak --keycloak-version 26
+```
+
+### Building the theme
+
+[See also official docs](https://docs.keycloakify.dev/deploying-your-theme)
+
+```bash
+# Build an extension jar into ./dist_keycloak
+# Needs maven installed.
+npm run build-keycloak-theme
+```
 
 # How to customize the theme
-
-[Documentation](https://docs.keycloakify.dev/css-customization)
 
 # Building the theme
 
 You need to have [Maven](https://maven.apache.org/) installed to build the theme (Maven >= 3.1.1, Java >= 7).  
 The `mvn` command must be in the $PATH.
 
--   On macOS: `brew install maven`
--   On Debian/Ubuntu: `sudo apt-get install maven`
--   On Windows: `choco install openjdk` and `choco install maven` (Or download from [here](https://maven.apache.org/download.cgi))
-
 ```bash
+# Generates ./dist_keycloak/theme.jar using maven
 npm run build-keycloak-theme
 ```
 
 Note that by default Keycloakify generates multiple .jar files for different versions of Keycloak.  
 You can customize this behavior, see documentation [here](https://docs.keycloakify.dev/features/compiler-options/keycloakversiontargets).
 
-# Initializing the account theme
+# TODO
 
 ```bash
 npx keycloakify initialize-account-theme
-```
-
-# Initializing the email theme
-
-```bash
 npx keycloakify initialize-email-theme
 ```
 
-# GitHub Actions
+## LICENSE
 
-The starter comes with a generic GitHub Actions workflow that builds the theme and publishes
-the jars [as GitHub releases artifacts](https://github.com/keycloakify/keycloakify-starter/releases/tag/v10.0.0).  
-To release a new version **just update the `package.json` version and push**.
+This code is not currently licensed.
 
-To enable the workflow go to your fork of this repository on GitHub then navigate to:
-`Settings` > `Actions` > `Workflow permissions`, select `Read and write permissions`.
+The original code was licensed under:
+
+```
+MIT License
+
+Copyright (c) 2020 GitHub user u/garronej
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+```

@@ -1,8 +1,9 @@
 {
     "name": "keycloakify-cdi",
     "version": "0.0.0",
-    "description": "Starter for Keycloakify 11",
+    "description": "CDI / HITS Keycloak Theme",
     "type": "module",
+    "private": true,
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
@@ -10,7 +11,7 @@
         "storybook": "storybook dev -p 6006",
         "format": "prettier . --write"
     },
-    "license": "MIT",
+    "license": "UNLICENSED",
     "keywords": [],
     "dependencies": {
         "keycloakify": "^11.15.0",
