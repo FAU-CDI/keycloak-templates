@@ -1,0 +1,61 @@
+/* CollapsibleForm: native <details>/<summary>, expands downward.
+   Uses CDI theme variables from parent. */
+
+/* ----- Section (details) ----- */
+.section {
+    margin: 0;
+    border: 2px solid var(--cdi-border);
+    border-radius: 0;
+    overflow: hidden;
+    max-height: 4rem;
+}
+
+.section[open] {
+    max-height: 80vh;
+}
+
+/* ----- Summary (trigger row) ----- */
+.summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cdi-foreground);
+    background: var(--cdi-surface);
+    cursor: pointer;
+    list-style: none;
+}
+
+.summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Chevron: > when closed, ^ when open */
+.summary::before {
+    content: "▶";
+    font-size: 0.75rem;
+    font-style: normal;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.section[open] .summary {
+    border-bottom: 2px solid var(--cdi-border);
+}
+
+.section[open] .summary::before {
+    transform: rotate(90deg);
+}
+
+.summary:hover {
+    background: var(--cdi-surface-hover);
+}
+
+/* ----- Content (expandable body) ----- */
+.content {
+    padding: 1rem 1.5rem;
+    background: var(--cdi-surface-alt);
+}

@@ -1,0 +1,117 @@
+/* Login form. Uses CDI variables from CdiTemplate .root. */
+
+.form {
+    margin: 0;
+}
+
+.formWrapper {
+    margin-top: 0.625rem;
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.formGroupLast {
+    margin-bottom: 0;
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--cdi-foreground);
+}
+
+.input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--cdi-border);
+    border-radius: 0;
+    background: var(--cdi-surface);
+    color: var(--cdi-foreground);
+    box-sizing: border-box;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--cdi-primary);
+}
+
+.inputInvalid {
+    background: var(--cdi-error-bg);
+    border-color: var(--cdi-error-border);
+    color: var(--cdi-error-text);
+}
+
+.inputInvalid:focus {
+    border-color: var(--cdi-error-border);
+}
+
+.submitButton {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid var(--cdi-primary);
+    border-radius: 0;
+    background: var(--cdi-primary);
+    color: var(--cdi-primary-contrast);
+    cursor: pointer;
+}
+
+.submitButton:hover:not(:disabled) {
+    background: var(--cdi-primary-hover);
+    border-color: var(--cdi-primary-hover);
+}
+
+.submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.formErrorAlert {
+    margin-bottom: 1rem;
+}
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    border: 1px solid;
+}
+
+.alertError {
+    background: var(--cdi-error-bg);
+    border-color: var(--cdi-error-border);
+    color: var(--cdi-error-text);
+}
+
+.alertIcon {
+    display: flex;
+    align-items: flex-start;
+}
+
+.alertTitle {
+    font-size: inherit;
+}
+
+.formOptionsRow .formOptionsCheckbox,
+.formOptionsLink {
+    font-size: 0.9375rem;
+    color: var(--cdi-foreground);
+}
+
+.formOptionsLink:hover {
+    text-decoration: underline;
+}
+
+.formButtons {
+    margin-top: 1rem;
+}
+
+.rememberMeCheckbox {
+    margin-top: 0;
+    color: var(--cdi-foreground);
+}

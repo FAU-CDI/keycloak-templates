@@ -68,6 +68,9 @@ You can customize this behavior, see documentation [here](https://docs.keycloaki
 
 # TODO
 
+- Prune unused features (like WebAuthn) from the template to make it more readable 
+- Dark Theme 
+
 ```bash
 npx keycloakify initialize-account-theme
 npx keycloakify initialize-email-theme

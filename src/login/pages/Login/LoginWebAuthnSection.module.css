@@ -1,0 +1,22 @@
+/* WebAuthn section. Uses CDI variables from CdiTemplate .root. */
+
+.webauthnForm {
+    margin: 0;
+}
+
+.webauthnButton {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid var(--cdi-border);
+    border-radius: 0;
+    background: var(--cdi-surface);
+    color: var(--cdi-foreground);
+    cursor: pointer;
+}
+
+.webauthnButton:hover {
+    background: var(--cdi-surface-hover);
+}

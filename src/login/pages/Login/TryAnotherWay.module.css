@@ -1,0 +1,14 @@
+/* Try another way form. Uses CDI variables from CdiTemplate .root. */
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.tryAnotherWayLink {
+    font-size: 0.9375rem;
+    color: var(--cdi-primary);
+}
+
+.tryAnotherWayLink:hover {
+    text-decoration: underline;
+}

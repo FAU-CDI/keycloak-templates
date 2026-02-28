@@ -1,0 +1,43 @@
+/* CDI login template. Root class holds CSS variables and minimal layout; descendant styles live in CdiLoginCard, CdiLocaleSwitcher, and Login.module.css. */
+
+.root {
+    /* FAU (fau.de) inspired palette: dark blue primary, white/gray surfaces */
+    --cdi-foreground: #1a1a1a;
+    --cdi-background: #ffffff;
+    --cdi-body-background: #e8e8e8;
+    --cdi-border: #333333;
+    --cdi-primary: #00205b;
+    --cdi-primary-hover: #001a4a;
+    --cdi-primary-contrast: #ffffff;
+    --cdi-surface: #ffffff;
+    --cdi-surface-hover: #f0f0f0;
+    --cdi-surface-alt: #f5f5f5;
+    --cdi-logo-bg: #d4e4f0;
+    --cdi-logo-border: #00205b;
+    --cdi-error-bg: #fdf2f2;
+    --cdi-error-border: #b91c1c;
+    --cdi-error-text: #7f1d1d;
+    --cdi-warning-bg: #fffbeb;
+    --cdi-warning-border: #b45309;
+    --cdi-warning-text: #78350f;
+    --cdi-success-bg: #f0fdf4;
+    --cdi-success-border: #15803d;
+    --cdi-success-text: #14532d;
+    --cdi-info-bg: #eff6ff;
+    --cdi-info-border: #00205b;
+    --cdi-info-text: #1e3a5f;
+    --cdi-shadow: rgba(0, 0, 0, 0.12);
+
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+    color: var(--cdi-foreground);
+    background: var(--cdi-body-background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}

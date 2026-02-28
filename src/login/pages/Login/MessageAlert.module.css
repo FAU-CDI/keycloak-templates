@@ -1,0 +1,40 @@
+/* Message alert. Uses CDI variables from CdiTemplate .root. */
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    border: 1px solid;
+}
+
+.alertError {
+    background: var(--cdi-error-bg);
+    border-color: var(--cdi-error-border);
+    color: var(--cdi-error-text);
+}
+
+.alertWarning {
+    background: var(--cdi-warning-bg);
+    border-color: var(--cdi-warning-border);
+    color: var(--cdi-warning-text);
+}
+
+.alertSuccess {
+    background: var(--cdi-success-bg);
+    border-color: var(--cdi-success-border);
+    color: var(--cdi-success-text);
+}
+
+.alertInfo {
+    background: var(--cdi-info-bg);
+    border-color: var(--cdi-info-border);
+    color: var(--cdi-info-text);
+}
+
+.alertIcon {
+    display: flex;
+    align-items: flex-start;
+}
+
+.alertTitle {
+    font-size: inherit;
+}
