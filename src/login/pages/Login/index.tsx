@@ -83,6 +83,22 @@ export default function Login(props: LoginPageProps) {
             <SocialProviders providers={social.providers} msg={msg} kcClsx={kcClsx} />
         ) : null;
 
+    const hasPrefilledOrError =
+        !!login?.username?.trim() ||
+        messagesPerField.existsError("username", "password");
+
+    const institutionSectionNode =
+        socialProvidersNode !== null ? (
+            <CollapsibleForm
+                summaryLabel={msg("cdiSelectInstitution")}
+                defaultOpen={!hasPrefilledOrError}
+            >
+                {messageNode}
+                <p>{msg("cdiSelectInstitutionIntro")}</p>
+                {socialProvidersNode}
+            </CollapsibleForm>
+        ) : null;
+
     const TemplateComponent = Template;
 
     return (
@@ -107,16 +123,14 @@ export default function Login(props: LoginPageProps) {
                 displayInfo
                 infoNode={<p>{msg("cdiWelcomeText")}</p>}
                 infoNodeSlot={infoNode}
-                messageNode={messageNode}
+                institutionSectionNode={institutionSectionNode ?? undefined}
+                messageNode={institutionSectionNode == null ? messageNode : undefined}
+                socialProvidersNode={institutionSectionNode == null ? socialProvidersNode : undefined}
                 tryAnotherWayNode={tryAnotherWayNode}
-                socialProvidersNode={socialProvidersNode}
             >
                 <CollapsibleForm
                     summaryLabel={msg("cdiGivenLocalAccount")}
-                    defaultOpen={
-                        !!login?.username?.trim() ||
-                        messagesPerField.existsError("username", "password")
-                    }
+                    defaultOpen={hasPrefilledOrError}
                 >
                     <LoginForm
                         realm={realm}

@@ -7,12 +7,16 @@ const { useI18n, ofTypeI18n } = i18nBuilder
     .withThemeName<ThemeName>()
     .withCustomTranslations({
         en: {
+            cdiSelectInstitution: "Select your institution",
+            cdiSelectInstitutionIntro:
+                "Verify your membership with an academic institution. To complete the login process, we additionally need your name and email address.",
             cdiSelectInstitutionWith: "Select Your Institution with {0}",
-            cdiGivenLocalAccount: "I have a CDI account with username and password",
+            cdiGivenLocalAccount: "Log in with CDI username and password",
             cdiWelcomeText:
-                "To continue, please confirm that you are a member of an academic institution. If you encounter any problems, or your institution is not listed on the next page, please contact support.",
+                "To sign in we need to know that you are a member of an academic institution. If you encounter any problems (for instance your institution is not listed on the following page), please contact support.",
+            cdiLogoAlt: "CDI Logo",
             cdiContactSupport: "Contact Support",
-            cdiAbout: "About CDI / FDM Bayern SSO",
+            cdiAbout: "About CDI / FDM Bayern Login",
             cdiPrivacyPolicy: "Privacy Policy",
             cdiImprint: "Imprint",
             cdiAccessibility: "Accessibility",
@@ -20,13 +24,16 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             hidePassword: "Hide"
         },
         de: {
+            cdiSelectInstitution: "Institution wählen",
+            cdiSelectInstitutionIntro:
+                "Verifizieren Sie Ihre Zugehörigkeit zu einer akademischen Institution. Um den Login Vorgang abzuschließen, benötigen wir zusätzlich Ihren Namen und Ihre E-Mail Adresse.",
             cdiSelectInstitutionWith: "Institution wählen mit {0}",
-            cdiGivenLocalAccount:
-                "Ich habe einen CDI Account mit Benutzername und Passwort",
+            cdiGivenLocalAccount: "Mit CDI Nutzername und Passwort anmelden",
             cdiWelcomeText:
-                "Um fortzufahren, bitte bestätigen Sie, dass Sie Mitglied einer akademischen Institution sind. Wenn Probleme autauchen oder Ihre Institution nicht auf der nächsten Seite aufgelistet ist, wenden Sie sich bitte an den Support.",
+                "Um sich anzumelden, benötigen wir die Bestätigung, dass Sie Mitglied einer akademischen Institution sind. Wenn Probleme auftreten (z.B. Ihre Institution ist auf der nächsten Seite nicht aufgelistet), wenden Sie sich bitte an den Support.",
+            cdiLogoAlt: "CDI-Logo",
             cdiContactSupport: "Support kontaktieren",
-            cdiAbout: "Über CDI / FDM Bayern SSO",
+            cdiAbout: "Über CDI / FDM Bayern Login",
             cdiPrivacyPolicy: "Datenschutz",
             cdiImprint: "Impressum",
             cdiAccessibility: "Barrierefreiheit",

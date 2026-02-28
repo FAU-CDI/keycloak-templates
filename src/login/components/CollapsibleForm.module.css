@@ -56,6 +56,9 @@
 
 /* ----- Content (expandable body) ----- */
 .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     padding: 1rem 1.5rem;
     background: var(--cdi-surface-alt);
 }

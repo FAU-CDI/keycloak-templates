@@ -15,14 +15,11 @@ import cardStyles from "./CdiLoginCard.module.css";
 
 export type { CdiStaticButton } from "./StaticButtonRows";
 
-const CDI_MIDDLE_ROWS: CdiStaticButton[][] = [
+const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
     [
         { titleKey: "cdiContactSupport", href: { "": "mailto:cdi-sso@fau.de" } },
         { titleKey: "cdiAbout", href: { "": "https://www.fdm-bayern.org/sso/" } }
-    ]
-];
-
-const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
+    ],
     [
         {
             titleKey: "cdiPrivacyPolicy",
@@ -57,6 +54,8 @@ export type CdiTemplateProps = TemplateProps<KcContext, I18n> & {
     messageNode?: React.ReactNode;
     /** Optional slot for info block (Login page passes InfoBlock). When set, used instead of default info block. */
     infoNodeSlot?: React.ReactNode;
+    /** Optional slot for "Select institution" block (collapsible with message + social). When set, infoNodeSlot is rendered first, then this, then children; messageNode/socialProvidersNode are not rendered. */
+    institutionSectionNode?: React.ReactNode;
     /** Optional slot for try-another-way link (Login page passes TryAnotherWay). When set, used instead of default. */
     tryAnotherWayNode?: React.ReactNode;
 };
@@ -76,6 +75,7 @@ export default function CdiTemplate(props: CdiTemplateProps) {
         children,
         messageNode: messageNodeSlot,
         infoNodeSlot,
+        institutionSectionNode: institutionSectionNodeSlot,
         tryAnotherWayNode: tryAnotherWayNodeSlot
     } = props;
 
@@ -143,16 +143,7 @@ export default function CdiTemplate(props: CdiTemplateProps) {
 
     const languageTag = currentLanguage?.languageTag ?? "";
 
-    const staticButtonRowsNode = (
-        <div>
-            <StaticButtonRows
-                rows={CDI_MIDDLE_ROWS}
-                languageTag={languageTag}
-                msg={msg}
-            />
-        </div>
-    );
-    const staticButtonRowsBottomNode = (
+    const footerContentNode = (
         <footer className={cardStyles.footerWrap}>
             <StaticButtonRows
                 rows={CDI_FOOTER_ROWS}
@@ -162,7 +153,37 @@ export default function CdiTemplate(props: CdiTemplateProps) {
         </footer>
     );
 
-    const mainContent = (
+    const mainContent = institutionSectionNodeSlot !== undefined ? (
+        <>
+            {infoNodeSlot}
+            {institutionSectionNodeSlot}
+            {children}
+            {tryAnotherWayNodeSlot !== undefined
+                ? tryAnotherWayNodeSlot
+                : auth !== undefined &&
+                  auth.showTryAnotherWayLink && (
+                      <form
+                          ref={tryAnotherWayFormRef}
+                          action={url.loginAction}
+                          method="post"
+                      >
+                          <div>
+                              <input type="hidden" name="tryAnotherWay" value="on" />
+                              <a
+                                  href="#"
+                                  onClick={event => {
+                                      tryAnotherWayFormRef.current?.requestSubmit();
+                                      event.preventDefault();
+                                      return false;
+                                  }}
+                              >
+                                  {msg("doTryAnotherWay")}
+                              </a>
+                          </div>
+                      </form>
+                  )}
+        </>
+    ) : (
         <>
             {messageNodeSlot !== undefined
                 ? messageNodeSlot
@@ -196,7 +217,6 @@ export default function CdiTemplate(props: CdiTemplateProps) {
                           <div>{infoNode}</div>
                       </div>
                   )}
-            {staticButtonRowsNode}
             {children}
             {tryAnotherWayNodeSlot !== undefined
                 ? tryAnotherWayNodeSlot
@@ -231,25 +251,19 @@ export default function CdiTemplate(props: CdiTemplateProps) {
                 <div>{msg("loginTitleHtml", realm.displayNameHtml || realm.name)}</div>
             </div>
             <CdiLoginCard
-                headerChildren={
-                    <div className={cardStyles.headerRow}>
-                        {enabledLanguages.length > 1 && (
-                            <div className={cardStyles.headerSpacer} />
-                        )}
-                        {headerNodeResolved}
-                        {enabledLanguages.length > 1 ? (
-                            <div className={cardStyles.localeWrapper}>
-                                <CdiLocaleSwitcher
-                                    currentLanguage={currentLanguage}
-                                    enabledLanguages={enabledLanguages}
-                                    ariaLabel={msgStr("languages")}
-                                />
-                            </div>
-                        ) : null}
-                    </div>
+                logoAlt={msgStr("cdiLogoAlt")}
+                headerCenter={headerNodeResolved}
+                headerEnd={
+                    enabledLanguages.length > 1 ? (
+                        <CdiLocaleSwitcher
+                            currentLanguage={currentLanguage}
+                            enabledLanguages={enabledLanguages}
+                            ariaLabel={msgStr("languages")}
+                        />
+                    ) : undefined
                 }
                 mainContent={mainContent}
-                footerContent={staticButtonRowsBottomNode}
+                footerContent={footerContentNode}
             />
         </div>
     );

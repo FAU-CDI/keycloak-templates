@@ -10,8 +10,8 @@ const supportedEnDe = [
 
 export const realm = {
     name: "cdi",
-    displayName: "CDI SSO",
-    displayNameHtml: "CDI SSO",
+    displayName: "CDI / FDM Bayern Login ",
+    displayNameHtml: "CDI / FDM Bayern Login",
     internationalizationEnabled: true,
     registrationAllowed: false,
     resetPasswordAllowed: false
