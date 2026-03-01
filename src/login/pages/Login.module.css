@@ -1,6 +1,7 @@
-/* Login form. Uses CDI variables from CdiTemplate .root. */
+/* Login page. Uses CDI variables from CdiTemplate .root. */
 
-/* ----- Root ----- */
+/* ========== Login form ========== */
+
 .form {
     margin: 0;
     margin-top: 0.625rem;
@@ -14,7 +15,6 @@
     margin-bottom: 0;
 }
 
-/* ----- Alert ----- */
 .form [role="alert"] {
     padding: 0.75rem 1rem;
     border-radius: 0;
@@ -23,7 +23,6 @@
     color: var(--cdi-error-text);
 }
 
-/* ----- Labels ----- */
 .form label {
     display: block;
     margin-bottom: 0.25rem;
@@ -32,7 +31,6 @@
     color: var(--cdi-foreground);
 }
 
-/* ----- Inputs ----- */
 .form input[type="text"],
 .form input[type="password"] {
     width: 100%;
@@ -61,7 +59,6 @@
     border-color: var(--cdi-error-border);
 }
 
-/* ----- Password group (input + visibility toggle) ----- */
 .form .passwordGroup {
     display: flex;
     align-items: stretch;
@@ -99,7 +96,6 @@
     font-weight: 500;
 }
 
-/* ----- Submit ----- */
 .form input[type="submit"] {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -122,7 +118,6 @@
     cursor: not-allowed;
 }
 
-/* ----- Options row ----- */
 .optionsRow {
     display: flex;
     justify-content: space-between;
@@ -138,4 +133,36 @@
 
 .form .optionsRow a:hover {
     text-decoration: underline;
+}
+
+/* ========== Social providers ========== */
+
+.social {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--cdi-primary);
+    border-radius: 0;
+    background: var(--cdi-primary);
+    color: var(--cdi-primary-contrast);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.social a:hover {
+    background: var(--cdi-primary-hover);
+    border-color: var(--cdi-primary-hover);
 }
