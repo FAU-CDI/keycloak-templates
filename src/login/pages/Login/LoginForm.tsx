@@ -32,8 +32,7 @@ export type LoginFormProps = {
  * Login form body: error alert, username, password, remember me, forgot password, submit.
  */
 export default function LoginForm(props: LoginFormProps) {
-    const { realm, url, login, auth, usernameHidden, messagesPerField, i18n } =
-        props;
+    const { realm, url, login, auth, usernameHidden, messagesPerField, i18n } = props;
     const { msg, msgStr } = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
@@ -41,8 +40,9 @@ export default function LoginForm(props: LoginFormProps) {
     const usernameId = useId();
     const passwordId = useId();
     const rememberMeId = useId();
-    const { isPasswordRevealed, toggleIsPasswordRevealed } =
-        useIsPasswordRevealed({ passwordInputId: passwordId });
+    const { isPasswordRevealed, toggleIsPasswordRevealed } = useIsPasswordRevealed({
+        passwordInputId: passwordId
+    });
 
     const hasFieldError = messagesPerField.existsError("username", "password");
 
@@ -63,10 +63,7 @@ export default function LoginForm(props: LoginFormProps) {
                     role="alert"
                     dangerouslySetInnerHTML={{
                         __html: kcSanitize(
-                            messagesPerField.getFirstError(
-                                "username",
-                                "password"
-                            )
+                            messagesPerField.getFirstError("username", "password")
                         )
                     }}
                 />
@@ -140,10 +137,7 @@ export default function LoginForm(props: LoginFormProps) {
                         </label>
                     )}
                     {realm.resetPasswordAllowed && (
-                        <a
-                            tabIndex={6}
-                            href={url.loginResetCredentialsUrl}
-                        >
+                        <a tabIndex={6} href={url.loginResetCredentialsUrl}>
                             {msg("doForgotPassword")}
                         </a>
                     )}

@@ -2,7 +2,6 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 
 import styles from "./MessageAlert.module.css";
 
-
 const alertVariantMap = {
     error: styles.error,
     warning: styles.warning,
@@ -16,15 +15,19 @@ type MessageAlertProps = {
 };
 
 /**
- * Message banner (icon + summary). Login-only; used as message slot in CdiTemplate.
+ * Message banner (icon + summary). Used as message slot in CdiTemplate.
  */
 export default function MessageAlert(props: MessageAlertProps) {
     const { type, summary } = props;
     const variant = alertVariantMap[type];
 
     return (
-        <div className={variant} role="alert" dangerouslySetInnerHTML={{
-            __html: kcSanitize(summary)
-        }} />
+        <div
+            className={variant}
+            role="alert"
+            dangerouslySetInnerHTML={{
+                __html: kcSanitize(summary)
+            }}
+        />
     );
 }

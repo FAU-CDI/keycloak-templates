@@ -57,7 +57,8 @@ const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
 function getPreferredColorScheme(): boolean {
     // in development or headless mode, always use light mode.
     // otherwise check what the browser has set via media query.
-    if (process.env.NODE_ENV !== "production" || typeof window === "undefined") return false;
+    if (process.env.NODE_ENV !== "production" || typeof window === "undefined")
+        return false;
     try {
         return window.matchMedia("(prefers-color-scheme: dark)").matches;
     } catch {
@@ -68,13 +69,10 @@ function getPreferredColorScheme(): boolean {
 export default function CdiTemplate(props: TemplateProps<KcContext, I18n>) {
     const { headerNode, documentTitle, kcContext, i18n, children } = props;
 
-
     const { msg, msgStr, currentLanguage, enabledLanguages } = i18n;
     const [isDark, setIsDark] = useState(getPreferredColorScheme);
 
-
     const { realm } = kcContext;
-
 
     useEffect(() => {
         document.title =
@@ -96,20 +94,18 @@ export default function CdiTemplate(props: TemplateProps<KcContext, I18n>) {
                 ariaLabel={msgStr("languages")}
             />
         ) : undefined;
-    
-    const darkModeToggle =
+
+    const darkModeToggle = (
         <DarkModeToggle
             isDark={isDark}
             onToggle={() => setIsDark(d => !d)}
             labelSwitchToDark={msgStr("cdiSwitchToDark")}
             labelSwitchToLight={msgStr("cdiSwitchToLight")}
-        />;
+        />
+    );
 
     return (
-        <div
-            className={styles.root}
-            data-theme={isDark ? "dark" : "light"}
-        >
+        <div className={styles.root} data-theme={isDark ? "dark" : "light"}>
             <div>
                 <header>
                     <div>

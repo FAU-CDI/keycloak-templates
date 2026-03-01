@@ -9,7 +9,7 @@ import type { I18n } from "../../i18n";
 import Collapsible from "../../components/Collapsible";
 import { useScript } from "keycloakify/login/pages/Login.useScript";
 
-import MessageAlert from "./MessageAlert";
+import MessageAlert from "../../components/MessageAlert";
 import LoginForm from "./LoginForm";
 import SocialProviders from "./SocialProviders";
 import CdiTemplate from "../../components/CdiTemplate";
@@ -109,9 +109,7 @@ export default function Login(props: LoginPageProps) {
                 )
             }
         >
-            <p>
-                {msg("cdiWelcomeText")}
-            </p>
+            <p>{msg("cdiWelcomeText")}</p>
             {providersLogin}
             {nativeLogin}
         </CdiTemplate>
