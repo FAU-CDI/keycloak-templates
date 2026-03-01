@@ -1,0 +1,34 @@
+/* DarkModeToggle: single button. Uses CDI variables from CdiTemplate .root. */
+
+/* ----- Button ----- */
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: var(--cdi-foreground);
+    background: var(--cdi-surface);
+    border: 2px solid var(--cdi-border);
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.toggle:hover {
+    background: var(--cdi-surface-hover);
+}
+
+.toggle:focus {
+    outline: none;
+    border-color: var(--cdi-primary);
+}
+
+/* ----- Icon ----- */
+.icon {
+    font-size: 1rem;
+    line-height: 1;
+}

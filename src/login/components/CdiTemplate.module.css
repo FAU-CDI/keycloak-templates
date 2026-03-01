@@ -43,6 +43,19 @@
     box-sizing: border-box;
 }
 
+/* ----- Root (dark mode) ----- */
+.root[data-theme="dark"] {
+    --cdi-foreground: #e8e8e8;
+    --cdi-background: #1a1a1a;
+    --cdi-body-background: #0f0f0f;
+    --cdi-border: #555555;
+    --cdi-surface: #252525;
+    --cdi-surface-hover: #333333;
+    --cdi-surface-alt: #2a2a2a;
+    --cdi-logo-bg: #2a3a45;
+    --cdi-logo-border: #4a6a8a;
+}
+
 /* ----- Card ----- */
 .root > div {
     max-width: 720px;
@@ -73,6 +86,9 @@
 
 .root header > div > span {
     margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .root header > *:last-child {

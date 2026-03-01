@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { TemplateProps } from "keycloakify/login/TemplateProps";
 import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n, Key } from "../i18n";
 import type { KcContext } from "../KcContext";
+import DarkModeToggle from "./DarkModeToggle";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 import logoUrl from "../images/CDI_Logo_cmyk.svg";
@@ -53,15 +54,25 @@ const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
     ]
 ];
 
+function getPreferredColorScheme(): boolean {
+    if (typeof window === "undefined") return false;
+    try {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } catch {
+        return false;
+    }
+}
+
 export default function CdiTemplate(props: TemplateProps<KcContext, I18n>) {
     const { headerNode, documentTitle, kcContext, i18n, children } = props;
 
-    /* CDI template always disables default Keycloakify CSS so only custom styles apply. */
-    const doUseDefaultCss = false;
 
     const { msg, msgStr, currentLanguage, enabledLanguages } = i18n;
+    const [isDark, setIsDark] = useState(getPreferredColorScheme);
+
 
     const { realm } = kcContext;
+
 
     useEffect(() => {
         document.title =
@@ -69,7 +80,7 @@ export default function CdiTemplate(props: TemplateProps<KcContext, I18n>) {
     }, []);
 
     // if we're not ready to render, don't render!
-    const { isReadyToRender } = useInitialize({ kcContext, doUseDefaultCss });
+    const { isReadyToRender } = useInitialize({ kcContext, doUseDefaultCss: false });
 
     if (!isReadyToRender) {
         return null;
@@ -83,16 +94,30 @@ export default function CdiTemplate(props: TemplateProps<KcContext, I18n>) {
                 ariaLabel={msgStr("languages")}
             />
         ) : undefined;
+    
+    const darkModeToggle =
+        <DarkModeToggle
+            isDark={isDark}
+            onToggle={() => setIsDark(d => !d)}
+            labelSwitchToDark={msgStr("cdiSwitchToDark")}
+            labelSwitchToLight={msgStr("cdiSwitchToLight")}
+        />;
 
     return (
-        <div className={styles.root}>
+        <div
+            className={styles.root}
+            data-theme={isDark ? "dark" : "light"}
+        >
             <div>
                 <header>
                     <div>
                         {CDI_LOGOS.map((logo, idx) => (
                             <img key={idx} src={logo.url} alt={msgStr(logo.alt)} />
                         ))}
-                        <span>{languageSwitcher}</span>
+                        <span>
+                            {languageSwitcher}
+                            {darkModeToggle}
+                        </span>
                     </div>
                     <h1>{headerNode}</h1>
                 </header>

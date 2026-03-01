@@ -20,6 +20,8 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             cdiPrivacyPolicy: "Privacy Policy",
             cdiImprint: "Imprint",
             cdiAccessibility: "Accessibility",
+            cdiSwitchToDark: "Switch to dark mode",
+            cdiSwitchToLight: "Switch to light mode",
             showPassword: "Show",
             hidePassword: "Hide"
         },
@@ -37,6 +39,8 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             cdiPrivacyPolicy: "Datenschutz",
             cdiImprint: "Impressum",
             cdiAccessibility: "Barrierefreiheit",
+            cdiSwitchToDark: "Zu Dunkelmodus wechseln",
+            cdiSwitchToLight: "Zu Hellmodus wechseln",
             showPassword: "Anzeigen",
             hidePassword: "Verbergen"
         }
