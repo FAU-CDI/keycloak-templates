@@ -7,6 +7,10 @@ const config: StorybookConfig = {
         name: "@storybook/react-vite",
         options: {}
     },
-    staticDirs: ["../public"]
+    staticDirs: ["../public"],
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true
+    }
 };
 export default config;
