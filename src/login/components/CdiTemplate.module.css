@@ -1,5 +1,10 @@
 /* CdiTemplate: page shell, card, header, main, footer. Uses CDI theme variables. */
 
+/* ----- Weird frame in production ----- */
+:global(body) {
+    margin: 0;
+}
+
 /* ----- Root (page layout + variables) ----- */
 .root {
     /* FAU (fau.de) inspired palette */
