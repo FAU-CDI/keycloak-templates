@@ -15,7 +15,7 @@ type IdpReviewUserProfileProps = Omit<PageProps<IdpReviewUserProfileKcContext, I
 
 export default function IdpReviewUserProfile(props: IdpReviewUserProfileProps) {
     const { kcContext, i18n, UserProfileFormFields, doMakeUserConfirmPassword } = props;
-    const { url, isAppInitiatedAction, kcClsx } = kcContext;
+    const { url, isAppInitiatedAction } = kcContext;
     const { msg } = i18n;
 
     return (
