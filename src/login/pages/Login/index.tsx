@@ -87,7 +87,6 @@ export default function Login(props: LoginPageProps) {
                 usernameHidden={usernameHidden}
                 messagesPerField={messagesPerField}
                 i18n={i18n}
-                kcClsx={kcClsx}
             />
         </Collapsible>
     );

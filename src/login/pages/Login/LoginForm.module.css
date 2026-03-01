@@ -1,22 +1,30 @@
 /* Login form. Uses CDI variables from CdiTemplate .root. */
 
+/* ----- Root ----- */
 .form {
     margin: 0;
-}
-
-.formWrapper {
     margin-top: 0.625rem;
 }
 
-.formGroup {
+.form > div {
     margin-bottom: 1rem;
 }
 
-.formGroupLast {
+.form > div:last-child {
     margin-bottom: 0;
 }
 
-.label {
+/* ----- Alert ----- */
+.form [role="alert"] {
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    border: 1px solid var(--cdi-error-border);
+    background: var(--cdi-error-bg);
+    color: var(--cdi-error-text);
+}
+
+/* ----- Labels ----- */
+.form label {
     display: block;
     margin-bottom: 0.25rem;
     font-size: 0.9375rem;
@@ -24,7 +32,9 @@
     color: var(--cdi-foreground);
 }
 
-.input {
+/* ----- Inputs ----- */
+.form input[type="text"],
+.form input[type="password"] {
     width: 100%;
     padding: 0.5rem 0.75rem;
     font-size: 1rem;
@@ -35,22 +45,62 @@
     box-sizing: border-box;
 }
 
-.input:focus {
+.form input[type="text"]:focus,
+.form input[type="password"]:focus {
     outline: none;
     border-color: var(--cdi-primary);
 }
 
-.inputInvalid {
+.form input[aria-invalid="true"] {
     background: var(--cdi-error-bg);
     border-color: var(--cdi-error-border);
     color: var(--cdi-error-text);
 }
 
-.inputInvalid:focus {
+.form input[aria-invalid="true"]:focus {
     border-color: var(--cdi-error-border);
 }
 
-.submitButton {
+/* ----- Password group (input + visibility toggle) ----- */
+.form .passwordGroup {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+}
+
+.form .passwordGroup input {
+    border-radius: 0;
+}
+
+.form .passwordGroup[data-invalid="true"] button {
+    background: var(--cdi-error-bg);
+    border-color: var(--cdi-error-border);
+    color: var(--cdi-error-text);
+}
+
+.form .passwordGroup button {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--cdi-border);
+    border-left: none;
+    border-radius: 0;
+    background: var(--cdi-surface);
+    cursor: pointer;
+    font-size: 0.8125rem;
+    color: var(--cdi-foreground);
+}
+
+.form .passwordGroup button:hover {
+    background: var(--cdi-surface-hover);
+}
+
+.form .passwordGroup i::before {
+    content: attr(data-password-visibility-label);
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* ----- Submit ----- */
+.form input[type="submit"] {
     width: 100%;
     padding: 0.75rem 1rem;
     font-size: 1rem;
@@ -62,56 +112,30 @@
     cursor: pointer;
 }
 
-.submitButton:hover:not(:disabled) {
+.form input[type="submit"]:hover:not(:disabled) {
     background: var(--cdi-primary-hover);
     border-color: var(--cdi-primary-hover);
 }
 
-.submitButton:disabled {
+.form input[type="submit"]:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
 
-.formErrorAlert {
-    margin-bottom: 1rem;
-}
-
-.alert {
-    padding: 0.75rem 1rem;
-    border-radius: 0;
-    border: 1px solid;
-}
-
-.alertError {
-    background: var(--cdi-error-bg);
-    border-color: var(--cdi-error-border);
-    color: var(--cdi-error-text);
-}
-
-.alertIcon {
+/* ----- Options row ----- */
+.optionsRow {
     display: flex;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.alertTitle {
-    font-size: inherit;
-}
-
-.formOptionsRow .formOptionsCheckbox,
-.formOptionsLink {
+.form .optionsRow label,
+.form .optionsRow a {
     font-size: 0.9375rem;
     color: var(--cdi-foreground);
 }
 
-.formOptionsLink:hover {
+.form .optionsRow a:hover {
     text-decoration: underline;
-}
-
-.formButtons {
-    margin-top: 1rem;
-}
-
-.rememberMeCheckbox {
-    margin-top: 0;
-    color: var(--cdi-foreground);
 }
