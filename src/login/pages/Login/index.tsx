@@ -10,7 +10,6 @@ import Collapsible from "../../components/Collapsible";
 import { useScript } from "keycloakify/login/pages/Login.useScript";
 
 import MessageAlert from "./MessageAlert";
-import InfoBlock from "./InfoBlock";
 import LoginForm from "./LoginForm";
 import SocialProviders from "./SocialProviders";
 import CdiTemplate from "../../components/CdiTemplate";
@@ -111,7 +110,9 @@ export default function Login(props: LoginPageProps) {
                 )
             }
         >
-            <InfoBlock infoNode={<p>{msg("cdiWelcomeText")}</p>} kcClsx={kcClsx} />
+            <p>
+                {msg("cdiWelcomeText")}
+            </p>
             {providersLogin}
             {nativeLogin}
         </CdiTemplate>

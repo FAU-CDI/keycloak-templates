@@ -55,7 +55,9 @@ const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
 ];
 
 function getPreferredColorScheme(): boolean {
-    if (typeof window === "undefined") return false;
+    // in development or headless mode, always use light mode.
+    // otherwise check what the browser has set via media query.
+    if (process.env.NODE_ENV !== "production" || typeof window === "undefined") return false;
     try {
         return window.matchMedia("(prefers-color-scheme: dark)").matches;
     } catch {
