@@ -1,10 +1,12 @@
-/* Login update profile form. Uses CDI variables from CdiTemplate .root. */
+/* CdiUserProfileForm: shared profile form (update-profile, idp-review). Uses CDI variables from CdiTemplate .root. */
 
+/* ----- Form container ----- */
 .form {
     margin: 0;
     margin-top: 0.625rem;
 }
 
+/* ----- Intro ----- */
 .formIntro {
     margin: 0;
     padding-bottom: 1.5rem;
@@ -13,6 +15,7 @@
     color: var(--cdi-foreground);
 }
 
+/* ----- Field groups ----- */
 .form > div {
     margin-bottom: 1rem;
 }
@@ -21,7 +24,7 @@
     margin-bottom: 0;
 }
 
-/* Label row: label and required asterisk on same line */
+/* ----- Labels ----- */
 .form > div > div:first-child:has(label) {
     display: flex;
     align-items: baseline;
@@ -35,8 +38,10 @@
     color: var(--cdi-foreground);
 }
 
-/* Global message (e.g. from MessageAlert) */
+/* ----- Messages ----- */
 .form [role="alert"] {
+    width: 100%;
+    box-sizing: border-box;
     padding: 0.75rem 1rem;
     border-radius: 0;
     border: 1px solid var(--cdi-error-border);
@@ -44,9 +49,10 @@
     color: var(--cdi-error-text);
 }
 
-/* Per-field validation message (UserProfileFormFields FieldErrors span) */
 .form span[id^="input-error-"] {
     display: block;
+    width: 100%;
+    box-sizing: border-box;
     margin-top: 0.375rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
@@ -56,6 +62,7 @@
     color: var(--cdi-error-text);
 }
 
+/* ----- Inputs ----- */
 .form input[type="text"],
 .form input[type="email"],
 .form input[type="password"] {
@@ -76,7 +83,7 @@
     border-color: var(--cdi-primary);
 }
 
-/* Read-only / disabled fields: grayed out, clearly non-editable */
+/* ----- Read-only / disabled ----- */
 .form input:disabled,
 .form textarea:disabled,
 .form select:disabled {
@@ -87,6 +94,7 @@
     opacity: 0.9;
 }
 
+/* ----- Invalid state ----- */
 .form input[aria-invalid="true"] {
     background: var(--cdi-error-bg);
     border-color: var(--cdi-error-border);
@@ -97,6 +105,7 @@
     border-color: var(--cdi-error-border);
 }
 
+/* ----- Form actions ----- */
 .formActions {
     display: flex;
     flex-wrap: wrap;
@@ -104,6 +113,7 @@
     align-items: center;
 }
 
+/* ----- Buttons ----- */
 .form input[type="submit"] {
     width: 100%;
     padding: 0.75rem 1rem;
