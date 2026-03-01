@@ -2,7 +2,7 @@
    Uses CDI theme variables from parent. */
 
 /* ----- Section (details) ----- */
-.section {
+.collapsible {
     margin: 0;
     border: 2px solid var(--cdi-border);
     border-radius: 0;
@@ -10,12 +10,12 @@
     max-height: 4rem;
 }
 
-.section[open] {
+.collapsible[open] {
     max-height: 80vh;
 }
 
-/* ----- Summary (trigger row) ----- */
-.summary {
+/* ----- Summary ----- */
+.collapsible summary {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -29,12 +29,12 @@
     list-style: none;
 }
 
-.summary::-webkit-details-marker {
+.collapsible summary::-webkit-details-marker {
     display: none;
 }
 
 /* Chevron: > when closed, ^ when open */
-.summary::before {
+.collapsible summary::before {
     content: "▶";
     font-size: 0.75rem;
     font-style: normal;
@@ -42,20 +42,20 @@
     transition: transform 0.2s ease;
 }
 
-.section[open] .summary {
+.collapsible[open] summary {
     border-bottom: 2px solid var(--cdi-border);
 }
 
-.section[open] .summary::before {
+.collapsible[open] summary::before {
     transform: rotate(90deg);
 }
 
-.summary:hover {
+.collapsible summary:hover {
     background: var(--cdi-surface-hover);
 }
 
 /* ----- Content (expandable body) ----- */
-.content {
+.collapsible > div {
     display: flex;
     flex-direction: column;
     gap: 1rem;

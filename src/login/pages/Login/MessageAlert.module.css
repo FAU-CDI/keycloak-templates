@@ -30,11 +30,6 @@
     color: var(--cdi-info-text);
 }
 
-.alertIcon {
-    display: flex;
-    align-items: flex-start;
-}
-
 .alertTitle {
     font-size: inherit;
 }

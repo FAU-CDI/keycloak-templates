@@ -1,35 +1,27 @@
 /**
  * Login page (login.ftl): username/password + optional WebAuthn. Composes CdiTemplate with Login-only slots and CollapsibleForm.
  */
-import type { ComponentType } from "react";
-import { useState } from "react";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../../KcContext";
 import type { I18n } from "../../i18n";
-import type { CdiTemplateProps } from "../../components/CdiTemplate";
-import CollapsibleForm from "../../components/CollapsibleForm";
+import Collapsible from "../../components/Collapsible";
 import { useScript } from "keycloakify/login/pages/Login.useScript";
 
 import MessageAlert from "./MessageAlert";
 import InfoBlock from "./InfoBlock";
-import TryAnotherWay from "./TryAnotherWay";
 import LoginForm from "./LoginForm";
-import LoginWebAuthnSection from "./LoginWebAuthnSection";
 import SocialProviders from "./SocialProviders";
-
-import styles from "./LoginRoot.module.css";
+import CdiTemplate from "../../components/CdiTemplate";
 
 type LoginKcContext = Extract<KcContext, { pageId: "login.ftl" }>;
 
 /** Login page props: Template is typed to accept CdiTemplateProps (used by KcPage for login.ftl). */
-type LoginPageProps = Omit<PageProps<LoginKcContext, I18n>, "Template"> & {
-    Template: ComponentType<CdiTemplateProps>;
-};
+type LoginPageProps = Omit<PageProps<LoginKcContext, I18n>, "Template">;
 
 export default function Login(props: LoginPageProps) {
-    const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
+    const { kcContext, i18n, doUseDefaultCss, classes } = props;
 
     const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
 
@@ -42,19 +34,14 @@ export default function Login(props: LoginPageProps) {
         auth,
         message,
         isAppInitiatedAction,
-        messagesPerField,
-        enableWebAuthnConditionalUI,
-        authenticators
+        messagesPerField
     } = kcContext;
 
     const { msg, msgStr } = i18n;
 
-    const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
-
-    const webAuthnButtonId = "authenticateWebAuthnButton";
-
+    // we don't actually do WebAuthN, so we don't need to load the script
     useScript({
-        webAuthnButtonId,
+        webAuthnButtonId: "",
         kcContext,
         i18n
     });
@@ -64,98 +51,69 @@ export default function Login(props: LoginPageProps) {
 
     const messageNode =
         showMessage && message ? (
-            <MessageAlert message={message} kcClsx={kcClsx} />
-        ) : null;
-
-    const infoNode = (
-        <InfoBlock infoNode={<p>{msg("cdiWelcomeText")}</p>} kcClsx={kcClsx} />
-    );
-
-    const tryAnotherWayNode =
-        auth !== undefined && auth.showTryAnotherWayLink ? (
-            <TryAnotherWay url={url} msg={msg} kcClsx={kcClsx} />
-        ) : null;
-
-    const socialProvidersNode =
-        realm.password &&
-        social?.providers !== undefined &&
-        social.providers.length > 0 ? (
-            <SocialProviders providers={social.providers} msg={msg} kcClsx={kcClsx} />
+            <MessageAlert type={message.type} summary={message.summary} />
         ) : null;
 
     const hasPrefilledOrError =
-        !!login?.username?.trim() ||
-        messagesPerField.existsError("username", "password");
+        !!login?.username?.trim() || messagesPerField.existsError("username", "password");
 
-    const institutionSectionNode =
-        socialProvidersNode !== null ? (
-            <CollapsibleForm
-                summaryLabel={msg("cdiSelectInstitution")}
+    const providersLogin =
+        realm.password &&
+        social?.providers !== undefined &&
+        social.providers.length > 0 ? (
+            <Collapsible
+                label={msg("cdiSelectInstitution")}
                 defaultOpen={!hasPrefilledOrError}
             >
                 {messageNode}
                 <p>{msg("cdiSelectInstitutionIntro")}</p>
-                {socialProvidersNode}
-            </CollapsibleForm>
+                <SocialProviders
+                    providers={social.providers}
+                    msgStr={msgStr}
+                    kcClsx={kcClsx}
+                />
+            </Collapsible>
         ) : null;
 
-    const TemplateComponent = Template;
+    const nativeLogin = (
+        <Collapsible
+            label={msg("cdiGivenLocalAccount")}
+            defaultOpen={hasPrefilledOrError}
+        >
+            <LoginForm
+                realm={realm}
+                url={url}
+                login={login}
+                auth={auth}
+                usernameHidden={usernameHidden}
+                messagesPerField={messagesPerField}
+                i18n={i18n}
+                kcClsx={kcClsx}
+            />
+        </Collapsible>
+    );
 
     return (
-        <div className={styles.loginRoot}>
-            <TemplateComponent
-                kcContext={kcContext}
-                i18n={i18n}
-                doUseDefaultCss={doUseDefaultCss}
-                classes={classes}
-                displayMessage={true}
-                headerNode={
-                    realm.displayNameHtml ? (
-                        <span
-                            dangerouslySetInnerHTML={{
-                                __html: kcSanitize(realm.displayNameHtml)
-                            }}
-                        />
-                    ) : (
-                        realm.displayName ?? realm.name
-                    )
-                }
-                displayInfo
-                infoNode={<p>{msg("cdiWelcomeText")}</p>}
-                infoNodeSlot={infoNode}
-                institutionSectionNode={institutionSectionNode ?? undefined}
-                messageNode={institutionSectionNode == null ? messageNode : undefined}
-                socialProvidersNode={institutionSectionNode == null ? socialProvidersNode : undefined}
-                tryAnotherWayNode={tryAnotherWayNode}
-            >
-                <CollapsibleForm
-                    summaryLabel={msg("cdiGivenLocalAccount")}
-                    defaultOpen={hasPrefilledOrError}
-                >
-                    <LoginForm
-                        realm={realm}
-                        url={url}
-                        login={login}
-                        auth={auth}
-                        usernameHidden={usernameHidden}
-                        messagesPerField={messagesPerField}
-                        enableWebAuthnConditionalUI={enableWebAuthnConditionalUI}
-                        i18n={i18n}
-                        kcClsx={kcClsx}
-                        isLoginButtonDisabled={isLoginButtonDisabled}
-                        setIsLoginButtonDisabled={setIsLoginButtonDisabled}
+        <CdiTemplate
+            kcContext={kcContext}
+            i18n={i18n}
+            doUseDefaultCss={false}
+            displayMessage={true}
+            headerNode={
+                realm.displayNameHtml ? (
+                    <span
+                        dangerouslySetInnerHTML={{
+                            __html: kcSanitize(realm.displayNameHtml)
+                        }}
                     />
-                    {enableWebAuthnConditionalUI && (
-                        <LoginWebAuthnSection
-                            url={url}
-                            authenticators={authenticators}
-                            webAuthnButtonId={webAuthnButtonId}
-                            msgStr={msgStr}
-                            kcClsx={kcClsx}
-                        />
-                    )}
-                </CollapsibleForm>
-            </TemplateComponent>
-        </div>
+                ) : (
+                    realm.displayName ?? realm.name
+                )
+            }
+        >
+            <InfoBlock infoNode={<p>{msg("cdiWelcomeText")}</p>} kcClsx={kcClsx} />
+            {providersLogin}
+            {nativeLogin}
+        </CdiTemplate>
     );
 }

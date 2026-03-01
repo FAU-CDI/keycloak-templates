@@ -1,28 +1,33 @@
-import { useEffect, useRef } from "react";
-import { clsx } from "keycloakify/tools/clsx";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
+import { useEffect } from "react";
 import type { TemplateProps } from "keycloakify/login/TemplateProps";
-import { useSetClassName } from "keycloakify/tools/useSetClassName";
 import { useInitialize } from "keycloakify/login/Template.useInitialize";
-import type { I18n } from "../i18n";
+import type { I18n, Key } from "../i18n";
 import type { KcContext } from "../KcContext";
-import { StaticButtonRows, type CdiStaticButton } from "./StaticButtonRows";
-import CdiLoginCard from "./CdiLoginCard";
-import CdiLocaleSwitcher from "./CdiLocaleSwitcher";
+import LocaleSwitcher from "./LocaleSwitcher";
+
+import logoUrl from "../images/CDI_Logo_cmyk.svg";
 
 import styles from "./CdiTemplate.module.css";
-import cardStyles from "./CdiLoginCard.module.css";
 
-export type { CdiStaticButton } from "./StaticButtonRows";
+export type CdiStaticButton = {
+    type: Key;
+    href: Record<string, string>;
+    small?: boolean;
+};
+
+const CDI_LOGOS: { url: string; alt: Key }[] = [
+    { url: logoUrl, alt: "cdiLogoAlt" },
+    { url: logoUrl, alt: "cdiLogoAlt" }
+];
 
 const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
     [
-        { titleKey: "cdiContactSupport", href: { "": "mailto:cdi-sso@fau.de" } },
-        { titleKey: "cdiAbout", href: { "": "https://www.fdm-bayern.org/sso/" } }
+        { type: "cdiContactSupport", href: { "": "mailto:cdi-sso@fau.de" } },
+        { type: "cdiAbout", href: { "": "https://www.fdm-bayern.org/sso/" } }
     ],
     [
         {
-            titleKey: "cdiPrivacyPolicy",
+            type: "cdiPrivacyPolicy",
             href: {
                 "": "https://www.cdi.fau.de/en/privacy/",
                 de: "https://www.cdi.fau.de/datenschutz/"
@@ -30,7 +35,7 @@ const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
             small: true
         },
         {
-            titleKey: "cdiImprint",
+            type: "cdiImprint",
             href: {
                 "": "https://www.cdi.fau.de/en/imprint/",
                 de: "https://www.cdi.fau.de/impressum/"
@@ -38,7 +43,7 @@ const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
             small: true
         },
         {
-            titleKey: "cdiAccessibility",
+            type: "cdiAccessibility",
             href: {
                 "": "https://www.cdi.fau.de/en/accessibility",
                 de: "https://www.cdi.fau.de/barrierefreiheit/"
@@ -48,223 +53,74 @@ const CDI_FOOTER_ROWS: CdiStaticButton[][] = [
     ]
 ];
 
-/** CDI-specific template props: when used, default styles are disabled (custom CSS only). */
-export type CdiTemplateProps = TemplateProps<KcContext, I18n> & {
-    /** Optional slot for message alert (Login page passes MessageAlert). When set, used instead of default message block. */
-    messageNode?: React.ReactNode;
-    /** Optional slot for info block (Login page passes InfoBlock). When set, used instead of default info block. */
-    infoNodeSlot?: React.ReactNode;
-    /** Optional slot for "Select institution" block (collapsible with message + social). When set, infoNodeSlot is rendered first, then this, then children; messageNode/socialProvidersNode are not rendered. */
-    institutionSectionNode?: React.ReactNode;
-    /** Optional slot for try-another-way link (Login page passes TryAnotherWay). When set, used instead of default. */
-    tryAnotherWayNode?: React.ReactNode;
-};
-
-export default function CdiTemplate(props: CdiTemplateProps) {
-    const {
-        displayInfo = false,
-        displayMessage = true,
-        displayRequiredFields = false,
-        headerNode,
-        socialProvidersNode = null,
-        infoNode = null,
-        documentTitle,
-        bodyClassName,
-        kcContext,
-        i18n,
-        children,
-        messageNode: messageNodeSlot,
-        infoNodeSlot,
-        institutionSectionNode: institutionSectionNodeSlot,
-        tryAnotherWayNode: tryAnotherWayNodeSlot
-    } = props;
+export default function CdiTemplate(props: TemplateProps<KcContext, I18n>) {
+    const { headerNode, documentTitle, kcContext, i18n, children } = props;
 
     /* CDI template always disables default Keycloakify CSS so only custom styles apply. */
     const doUseDefaultCss = false;
 
     const { msg, msgStr, currentLanguage, enabledLanguages } = i18n;
 
-    const { realm, auth, url, message, isAppInitiatedAction } = kcContext;
-
-    const tryAnotherWayFormRef = useRef<HTMLFormElement>(null);
+    const { realm } = kcContext;
 
     useEffect(() => {
         document.title =
             documentTitle ?? msgStr("loginTitle", realm.displayName || realm.name);
     }, []);
 
-    useSetClassName({
-        qualifiedName: "html",
-        className: ""
-    });
-
-    useSetClassName({
-        qualifiedName: "body",
-        className: bodyClassName ?? ""
-    });
-
+    // if we're not ready to render, don't render!
     const { isReadyToRender } = useInitialize({ kcContext, doUseDefaultCss });
 
     if (!isReadyToRender) {
         return null;
     }
 
-    const headerContent = !(
-        auth !== undefined &&
-        auth.showUsername &&
-        !auth.showResetCredentials
-    ) ? (
-        <h1 className={cardStyles.headerTitle}>{headerNode}</h1>
-    ) : (
-        <div>
-            <label>{auth.attemptedUsername}</label>
-            <a href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
-                <div>
-                    <i aria-hidden />
-                    <span>{msg("restartLoginTooltip")}</span>
-                </div>
-            </a>
-        </div>
-    );
-
-    const headerNodeResolved = displayRequiredFields ? (
-        <div>
-            <div className="subtitle">
-                <span className="subtitle">
-                    <span className="required">*</span>
-                    {msg("requiredFields")}
-                </span>
-            </div>
-            <div>{headerContent}</div>
-        </div>
-    ) : (
-        headerContent
-    );
-
-    const languageTag = currentLanguage?.languageTag ?? "";
-
-    const footerContentNode = (
-        <footer className={cardStyles.footerWrap}>
-            <StaticButtonRows
-                rows={CDI_FOOTER_ROWS}
-                languageTag={languageTag}
-                msg={msg}
+    const languageSwitcher =
+        enabledLanguages.length > 1 ? (
+            <LocaleSwitcher
+                currentLanguage={currentLanguage}
+                enabledLanguages={enabledLanguages}
+                ariaLabel={msgStr("languages")}
             />
-        </footer>
-    );
-
-    const mainContent = institutionSectionNodeSlot !== undefined ? (
-        <>
-            {infoNodeSlot}
-            {institutionSectionNodeSlot}
-            {children}
-            {tryAnotherWayNodeSlot !== undefined
-                ? tryAnotherWayNodeSlot
-                : auth !== undefined &&
-                  auth.showTryAnotherWayLink && (
-                      <form
-                          ref={tryAnotherWayFormRef}
-                          action={url.loginAction}
-                          method="post"
-                      >
-                          <div>
-                              <input type="hidden" name="tryAnotherWay" value="on" />
-                              <a
-                                  href="#"
-                                  onClick={event => {
-                                      tryAnotherWayFormRef.current?.requestSubmit();
-                                      event.preventDefault();
-                                      return false;
-                                  }}
-                              >
-                                  {msg("doTryAnotherWay")}
-                              </a>
-                          </div>
-                      </form>
-                  )}
-        </>
-    ) : (
-        <>
-            {messageNodeSlot !== undefined
-                ? messageNodeSlot
-                : displayMessage &&
-                  message !== undefined &&
-                  (message.type !== "warning" || !isAppInitiatedAction) && (
-                      <div
-                          className={clsx(
-                              `alert-${message.type}`,
-                              `pf-m-${message?.type === "error" ? "danger" : message.type}`
-                          )}
-                      >
-                          <div className="pf-c-alert__icon">
-                              {message.type === "success" && <span />}
-                              {message.type === "warning" && <span />}
-                              {message.type === "error" && <span />}
-                              {message.type === "info" && <span />}
-                          </div>
-                          <span
-                              dangerouslySetInnerHTML={{
-                                  __html: kcSanitize(message.summary)
-                              }}
-                          />
-                      </div>
-                  )}
-            {socialProvidersNode}
-            {infoNodeSlot !== undefined
-                ? infoNodeSlot
-                : displayInfo && (
-                      <div>
-                          <div>{infoNode}</div>
-                      </div>
-                  )}
-            {children}
-            {tryAnotherWayNodeSlot !== undefined
-                ? tryAnotherWayNodeSlot
-                : auth !== undefined &&
-                  auth.showTryAnotherWayLink && (
-                      <form
-                          ref={tryAnotherWayFormRef}
-                          action={url.loginAction}
-                          method="post"
-                      >
-                          <div>
-                              <input type="hidden" name="tryAnotherWay" value="on" />
-                              <a
-                                  href="#"
-                                  onClick={event => {
-                                      tryAnotherWayFormRef.current?.requestSubmit();
-                                      event.preventDefault();
-                                      return false;
-                                  }}
-                              >
-                                  {msg("doTryAnotherWay")}
-                              </a>
-                          </div>
-                      </form>
-                  )}
-        </>
-    );
+        ) : undefined;
 
     return (
         <div className={styles.root}>
-            <div className={cardStyles.hiddenHeader} aria-hidden="true">
-                <div>{msg("loginTitleHtml", realm.displayNameHtml || realm.name)}</div>
+            <div>
+                <header>
+                    <div>
+                        {CDI_LOGOS.map((logo, idx) => (
+                            <img key={idx} src={logo.url} alt={msgStr(logo.alt)} />
+                        ))}
+                        <span>{languageSwitcher}</span>
+                    </div>
+                    <h1>{headerNode}</h1>
+                </header>
+                <main>{children}</main>
+                <footer>
+                    {CDI_FOOTER_ROWS.map((row, rowIndex) => (
+                        <div key={rowIndex} className={styles.footerRow}>
+                            {row.map((button, index) => {
+                                const href =
+                                    button.href[currentLanguage?.languageTag ?? ""] ??
+                                    button.href[""] ??
+                                    "#";
+                                return (
+                                    <a
+                                        key={index}
+                                        href={href || "#"}
+                                        data-small={button.small}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {msg(button.type)}
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    ))}
+                </footer>
             </div>
-            <CdiLoginCard
-                logoAlt={msgStr("cdiLogoAlt")}
-                headerCenter={headerNodeResolved}
-                headerEnd={
-                    enabledLanguages.length > 1 ? (
-                        <CdiLocaleSwitcher
-                            currentLanguage={currentLanguage}
-                            enabledLanguages={enabledLanguages}
-                            ariaLabel={msgStr("languages")}
-                        />
-                    ) : undefined
-                }
-                mainContent={mainContent}
-                footerContent={footerContentNode}
-            />
         </div>
     );
 }

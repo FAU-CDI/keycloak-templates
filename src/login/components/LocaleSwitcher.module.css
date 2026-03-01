@@ -1,11 +1,22 @@
-/* Locale dropdown. Uses CDI variables from CdiTemplate .root. */
+/* CdiLocaleSwitcher: dropdown button + menu. Uses CDI variables from CdiTemplate .root. */
 
-.dropdown {
+/* ----- Dropdown ----- */
+.locale {
     position: relative;
     display: inline-flex;
 }
 
-.button {
+.locale:not(:focus-within):not(:hover) ul {
+    visibility: hidden;
+}
+
+.locale:focus-within ul,
+.locale:hover ul {
+    visibility: visible;
+}
+
+/* ----- Button ----- */
+.locale button {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -19,15 +30,13 @@
     cursor: pointer;
 }
 
-/* Globe icon */
-.button::before {
+.locale button::before {
     content: "\1F310";
     font-size: 1rem;
     line-height: 1;
 }
 
-/* Chevron */
-.button::after {
+.locale button::after {
     content: "\25BC";
     font-size: 0.5rem;
     font-style: normal;
@@ -35,21 +44,17 @@
     transition: transform 0.2s ease;
 }
 
-.dropdown:focus-within .button::after,
-.dropdown:hover .button::after {
-    transform: rotate(180deg);
-}
-
-.button:hover {
+.locale button:hover {
     background: var(--cdi-surface-hover);
 }
 
-.button:focus {
+.locale button:focus {
     outline: none;
     border-color: var(--cdi-primary);
 }
 
-.menu {
+/* ----- Menu ----- */
+.locale ul {
     position: absolute;
     top: 100%;
     right: 0;
@@ -65,8 +70,7 @@
     z-index: 10;
 }
 
-/* Invisible bridge so hover stays active when moving from button to menu */
-.menu::before {
+.locale ul::before {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -75,27 +79,20 @@
     height: 0.25rem;
 }
 
-.dropdown:not(:focus-within):not(:hover) .menu {
-    visibility: hidden;
-}
-
-.dropdown:focus-within .menu,
-.dropdown:hover .menu {
-    visibility: visible;
-}
-
-.menuItem {
+/* ----- Menu link ----- */
+.locale a {
     margin: 0;
 }
 
-.menuLink {
+.locale a {
     display: block;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     color: var(--cdi-foreground);
     text-decoration: none;
+    text-align: right;
 }
 
-.menuLink:hover {
+.locale a:hover {
     background: var(--cdi-surface-hover);
 }

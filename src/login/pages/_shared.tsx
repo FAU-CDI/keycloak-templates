@@ -17,7 +17,6 @@ export const realm = {
     resetPasswordAllowed: false
 };
 export const social = {
-    displayInfo: true,
     providers: [
         {
             loginUrl: "oidc",

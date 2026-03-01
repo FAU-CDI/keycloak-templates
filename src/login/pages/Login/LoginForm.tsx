@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useState } from "react";
 import { clsx } from "keycloakify/tools/clsx";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcClsx } from "keycloakify/login/lib/kcClsx";
@@ -27,38 +27,27 @@ export type LoginFormProps = {
     auth: { selectedCredential?: string };
     usernameHidden?: boolean;
     messagesPerField: MessagesPerField;
-    enableWebAuthnConditionalUI?: boolean;
     i18n: I18n;
     kcClsx: KcClsx;
-    isLoginButtonDisabled: boolean;
-    setIsLoginButtonDisabled: (v: boolean) => void;
 };
 
 /**
  * Login form body: error alert, username, password, remember me, forgot password, submit.
  */
 export default function LoginForm(props: LoginFormProps) {
-    const {
-        realm,
-        url,
-        login,
-        auth,
-        usernameHidden,
-        messagesPerField,
-        enableWebAuthnConditionalUI,
-        i18n,
-        kcClsx,
-        isLoginButtonDisabled,
-        setIsLoginButtonDisabled
-    } = props;
+    const { realm, url, login, auth, usernameHidden, messagesPerField, i18n, kcClsx } =
+        props;
     const { msg, msgStr } = i18n;
 
-    if (!realm.password) return null;
+    const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
 
     const usernameId = useId();
     const passwordId = useId();
     const rememberMeId = useId();
+
     const hasFieldError = messagesPerField.existsError("username", "password");
+
+    if (!realm.password) return null;
 
     return (
         <div className={styles.form}>
@@ -116,11 +105,7 @@ export default function LoginForm(props: LoginFormProps) {
                                 defaultValue={login.username ?? ""}
                                 type="text"
                                 autoFocus
-                                autoComplete={
-                                    enableWebAuthnConditionalUI
-                                        ? "username webauthn"
-                                        : "username"
-                                }
+                                autoComplete={"username"}
                                 aria-invalid={hasFieldError}
                             />
                         </div>

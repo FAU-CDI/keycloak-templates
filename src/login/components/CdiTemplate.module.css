@@ -1,7 +1,8 @@
-/* CDI login template. Root class holds CSS variables and minimal layout; descendant styles live in CdiLoginCard, CdiLocaleSwitcher, and Login.module.css. */
+/* CdiTemplate: page shell, card, header, main, footer. Uses CDI theme variables. */
 
+/* ----- Root (page layout + variables) ----- */
 .root {
-    /* FAU (fau.de) inspired palette: dark blue primary, white/gray surfaces */
+    /* FAU (fau.de) inspired palette */
     --cdi-foreground: #1a1a1a;
     --cdi-background: #ffffff;
     --cdi-body-background: #e8e8e8;
@@ -40,4 +41,110 @@
     justify-content: center;
     padding: 2rem 1rem;
     box-sizing: border-box;
+}
+
+/* ----- Card ----- */
+.root > div {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0;
+    border: 2px solid var(--cdi-border);
+    border-radius: 0;
+    background: var(--cdi-background);
+    box-shadow: none;
+}
+
+/* ----- Header ----- */
+.root header {
+    position: relative;
+    padding: 1.25rem 1.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.root header > div {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.root header > div > span {
+    margin-left: auto;
+}
+
+.root header > *:last-child {
+    text-align: center;
+    width: 100%;
+}
+
+.root header h1 {
+    margin: 0;
+    font-size: 3.25rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--cdi-foreground);
+}
+
+/* ----- Logo ----- */
+.root header img {
+    display: block;
+    width: auto;
+    max-width: 200px;
+    height: 80px;
+    margin: 0;
+    object-fit: contain;
+    object-position: left center;
+    border-radius: 0;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* ----- Main ----- */
+.root main {
+    --cdi-content-padding-x: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem var(--cdi-content-padding-x) 1.5rem;
+    border-top: 2px solid var(--cdi-border);
+    border-bottom: 2px solid var(--cdi-border);
+}
+
+/* ----- Footer ----- */
+.root footer {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footerRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.footerRow a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--cdi-border);
+    background-color: var(--cdi-surface);
+    color: var(--cdi-foreground);
+    text-decoration: none;
+    font-size: 0.9375rem;
+}
+
+.footerRow a:hover {
+    background: var(--cdi-surface-hover);
+}
+
+.footerRow a[data-small] {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8125rem;
 }
