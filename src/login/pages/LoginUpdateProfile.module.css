@@ -1,0 +1,142 @@
+/* Login update profile form. Uses CDI variables from CdiTemplate .root. */
+
+.form {
+    margin: 0;
+    margin-top: 0.625rem;
+}
+
+.formIntro {
+    margin: 0;
+    padding-bottom: 1.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--cdi-foreground);
+}
+
+.form > div {
+    margin-bottom: 1rem;
+}
+
+.form > div:last-child {
+    margin-bottom: 0;
+}
+
+/* Label row: label and required asterisk on same line */
+.form > div > div:first-child:has(label) {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.form label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--cdi-foreground);
+}
+
+/* Global message (e.g. from MessageAlert) */
+.form [role="alert"] {
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    border: 1px solid var(--cdi-error-border);
+    background: var(--cdi-error-bg);
+    color: var(--cdi-error-text);
+}
+
+/* Per-field validation message (UserProfileFormFields FieldErrors span) */
+.form span[id^="input-error-"] {
+    display: block;
+    margin-top: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 0;
+    border: 1px solid var(--cdi-error-border);
+    background: var(--cdi-error-bg);
+    color: var(--cdi-error-text);
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"] {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--cdi-border);
+    border-radius: 0;
+    background: var(--cdi-surface);
+    color: var(--cdi-foreground);
+    box-sizing: border-box;
+}
+
+.form input[type="text"]:focus,
+.form input[type="email"]:focus,
+.form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--cdi-primary);
+}
+
+/* Read-only / disabled fields: grayed out, clearly non-editable */
+.form input:disabled,
+.form textarea:disabled,
+.form select:disabled {
+    background: var(--cdi-readonly-bg);
+    color: var(--cdi-readonly-text);
+    border-color: var(--cdi-readonly-border);
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+.form input[aria-invalid="true"] {
+    background: var(--cdi-error-bg);
+    border-color: var(--cdi-error-border);
+    color: var(--cdi-error-text);
+}
+
+.form input[aria-invalid="true"]:focus {
+    border-color: var(--cdi-error-border);
+}
+
+.formActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.form input[type="submit"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid var(--cdi-primary);
+    border-radius: 0;
+    background: var(--cdi-primary);
+    color: var(--cdi-primary-contrast);
+    cursor: pointer;
+}
+
+.form input[type="submit"]:hover:not(:disabled) {
+    background: var(--cdi-primary-hover);
+    border-color: var(--cdi-primary-hover);
+}
+
+.form input[type="submit"]:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.form button[name="cancel-aia"] {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid var(--cdi-border);
+    border-radius: 0;
+    background: var(--cdi-surface);
+    color: var(--cdi-foreground);
+    cursor: pointer;
+}
+
+.form button[name="cancel-aia"]:hover {
+    background: var(--cdi-surface-hover);
+}

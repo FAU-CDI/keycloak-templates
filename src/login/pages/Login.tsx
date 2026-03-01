@@ -6,8 +6,6 @@ import { useId, useState } from "react";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import { useIsPasswordRevealed } from "keycloakify/tools/useIsPasswordRevealed";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { KcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import Collapsible from "../components/Collapsible";
@@ -44,9 +42,7 @@ type SocialProvider = {
 /* ----- Login page ----- */
 
 export default function Login(props: LoginPageProps) {
-    const { kcContext, i18n, doUseDefaultCss, classes } = props;
-
-    const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
+    const { kcContext, i18n } = props;
 
     const { social, realm, url, usernameHidden, login, auth, message, isAppInitiatedAction, messagesPerField } = kcContext;
 
@@ -69,7 +65,7 @@ export default function Login(props: LoginPageProps) {
             <Collapsible label={msg("cdiSelectInstitution")} defaultOpen={!hasPrefilledOrError}>
                 {messageNode}
                 <p>{msg("cdiSelectInstitutionIntro")}</p>
-                <SocialProviders providers={social.providers} msgStr={msgStr} kcClsx={kcClsx} />
+                <SocialProviders providers={social.providers} msgStr={msgStr} />
             </Collapsible>
         ) : null;
 
@@ -228,7 +224,6 @@ function LoginForm(props: LoginFormProps) {
 type SocialProvidersProps = {
     providers: SocialProvider[];
     msgStr: I18n["msgStr"];
-    kcClsx: KcClsx;
 };
 
 function SocialProviders(props: SocialProvidersProps) {

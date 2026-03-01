@@ -14,12 +14,22 @@ type Story = StoryObj<typeof meta>;
 
 import { realm, localeDE, localeEN, messagesPerField } from "./_stories_shared";
 
+const profile = {
+    attributesByName: {
+        username: {
+            readOnly: true,
+            value: "whatever"
+        }
+    }
+};
+
 export const DefaultEnglish: Story = {
     render: () => (
         <KcPageStory
             kcContext={{
                 realm,
-                locale: localeEN
+                locale: localeEN,
+                profile
             }}
         />
     )
@@ -30,7 +40,8 @@ export const DefaultGerman: Story = {
         <KcPageStory
             kcContext={{
                 realm,
-                locale: localeDE
+                locale: localeDE,
+                profile
             }}
         />
     )
@@ -46,7 +57,8 @@ export const WithProfileErrorEnglish: Story = {
                     loginAction: "/mock-login-action"
                 },
                 messagesPerField: messagesPerField(["email"], "Invalid Email format."),
-                isAppInitiatedAction: false
+                isAppInitiatedAction: false,
+                profile
             }}
         />
     )

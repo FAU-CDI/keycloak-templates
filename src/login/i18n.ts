@@ -23,7 +23,9 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             cdiSwitchToDark: "Switch to dark mode",
             cdiSwitchToLight: "Switch to light mode",
             showPassword: "Show",
-            hidePassword: "Hide"
+            hidePassword: "Hide",
+            cdiUpdateProfileIntro:
+                "Please check the details above and hit the button to save. Your email address will need to be validated before your account can be used."
         },
         de: {
             cdiSelectInstitution: "Institution wählen",
@@ -42,7 +44,9 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             cdiSwitchToDark: "Zu Dunkelmodus wechseln",
             cdiSwitchToLight: "Zu Hellmodus wechseln",
             showPassword: "Anzeigen",
-            hidePassword: "Verbergen"
+            hidePassword: "Verbergen",
+            cdiUpdateProfileIntro:
+                "Bitte prüfen Sie die Angaben oben und nutzen Sie den Button um die Änderungen zu speichern. Ihre E-Mail-Adresse muss verifiziert werden, bevor Sie Ihr Konto Nutzen können."
         }
     })
     .build();

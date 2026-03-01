@@ -39,6 +39,7 @@ export const localeDE: StoryLocaleOverride = {
 
 export function messagesPerField(names: string[], message: string) {
     return {
+        exists: (fieldName: string) => names.includes(fieldName),
         existsError: (fieldName: string, ...otherFieldNames: string[]) => {
             const fieldNames = [fieldName, ...otherFieldNames];
             for (const name of names) {
